@@ -1,1 +1,14 @@
+# data folder
 /data/
+
+# virtualenv
+/flan-t5-env/
+
+# IDE
+.vscode/
+
+# model
+/finetuned_model/
+
+#logs
+/flan-t5-xl-lora/

@@ -7,17 +7,19 @@ from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 """
     Indic language support on flan-t5-xl: Hindi, Bengali, Gujarati, Telugu, Tamil, Marathi, Malayalam, Oriya, Panjabi, Urdu, Kannada, Assamese
 """
-model_card = 'google/flan-t5-xl'                                    
-dataset = load_dataset('opus_books', 'en-fr')                      # dummy dataset, to be replaced with the actual dataloader when training on DGX
+model_card = 'google/flan-t5-small'                                    
+dataset = load_dataset('opus_books', 'ca-nl')                      # dummy dataset, to be replaced with the actual dataloader when training on DGX
+print(len(dataset))
 dataset = dataset['train'].train_test_split(test_size=0.2)
+print(dataset['train'][0])
 print(f"Train size: {len(dataset['train'])}")
 print(f"Train size: {len(dataset['test'])}")
 
 tokenizer = AutoTokenizer.from_pretrained(model_card)
 
-source_language = 'en'
-target_language = 'fr'
-prompt = 'translate English to French: '
+source_language = 'ca'
+target_language = 'nl'
+prompt = 'translate Catalan to Dutch (Standard): '
 
 def preprocess_function(examples):
     inputs = [prompt + example[source_language] for example in examples['translation']]
