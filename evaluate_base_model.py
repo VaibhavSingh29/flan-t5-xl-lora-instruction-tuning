@@ -4,17 +4,15 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from datasets import load_dataset, load_from_disk
 from random import randrange
 
-peft_model_id = "finetuned_model"
-config = PeftConfig.from_pretrained(peft_model_id)
+model_card = "google/flan-t5-xl"
 
 model = AutoModelForSeq2SeqLM.from_pretrained(
-    config.base_model_name_or_path, load_in_8bit=True, device_map={"": 0}
+    model_card, load_in_8bit=True, device_map={"": 0}
 )
-tokenizer = AutoTokenizer.from_pretrained(config.base_model_name_or_path)
+tokenizer = AutoTokenizer.from_pretrained(model_card)
 
-model = PeftModel.from_pretrained(model, peft_model_id, device_map={"": 0})
 model.eval()
-print("Peft flan-t5-xl loaded")
+print("Base flan-t5-xl loaded")
 
 source_language = "hi"
 target_language = "kn"
@@ -33,5 +31,5 @@ outputs = model.generate(
 print(f"Source: {sample[source_language]}\n{'---'*20}")
 print(f"Gold translation: {sample[target_language]}\n{'---'*20}")
 print(
-    f"Output by model: {tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)[0]}"
+    f"Output by model: {tokenizer.batch_decode(outputs.detach().cpu().numpy(), skip_special_tokens=True)}"
 )

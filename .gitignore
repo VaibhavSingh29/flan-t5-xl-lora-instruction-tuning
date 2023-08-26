@@ -1,5 +1,8 @@
 # data folder
 /data/
+/tokenized_data/
+/*_*_dataset/
+/*-*/
 
 # virtualenv
 /flan-t5-env/
